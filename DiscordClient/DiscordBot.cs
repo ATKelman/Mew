@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ namespace DiscordClient
     public class DiscordBot
     {
         private readonly DiscordSocketClient _client;
-        private readonly IConfiguration _config;
 
         public DiscordBot()
         {
@@ -21,7 +21,7 @@ namespace DiscordClient
         {
             try
             {
-
+                await _client.LoginAsync(TokenType.Bot, token);
             }
             catch (Exception ex)
             {
