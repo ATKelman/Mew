@@ -7,25 +7,19 @@ using System.Threading.Tasks;
 
 namespace DiscordClient.Services
 {
-    public class CommandHandler
+    public class CommandHandlingService
     {
         private readonly CommandService _commands;
         private readonly DiscordSocketClient _client;
         private readonly IServiceProvider _services;
 
-        public CommandHandler(IServiceProvider services)
+        public CommandHandlingService(IServiceProvider services)
         {
-            _commands = services.GetRequiredService<CommandService>();
-            _client = services.GetRequiredService<DiscordSocketClient>();
             _services = services;
+            _commands = _services.GetRequiredService<CommandService>();
+            _client = _services.GetRequiredService<DiscordSocketClient>();
 
             _client.MessageReceived += MessageReceivedAsync;
-        }
-
-        public async Task InitializeAsync()
-        {
-            // register modules - public & inherit ModuleBase
-            _ = await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
         private async Task MessageReceivedAsync(SocketMessage e)
@@ -41,7 +35,7 @@ namespace DiscordClient.Services
                 int argPos = 0;
                 if (msg.HasCharPrefix('!', ref argPos))
                 {
-                    var result = await _commands.ExecuteAsync(context, argPos, null);
+                    var result = await _commands.ExecuteAsync(context, argPos, _services);
 
                     if (!result.IsSuccess)
                         await context.Channel.SendMessageAsync(result.ErrorReason.ToString());

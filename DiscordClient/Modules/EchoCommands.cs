@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiscordClient.Modules
 {
-    public class EchoCommands : Discord.Commands.ModuleBase
+    public class EchoCommands : ModuleBase
     {
         private readonly IServiceProvider _services;
 
@@ -15,7 +15,7 @@ namespace DiscordClient.Modules
             _services = services;
         }
 
-        [Command]
+        [Command("echo")]
         public async Task Echo([Remainder] string message)
         {
             await ReplyAsync(message);

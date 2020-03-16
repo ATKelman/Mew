@@ -1,8 +1,10 @@
 ﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using DiscordClient.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace DiscordClient
@@ -11,12 +13,13 @@ namespace DiscordClient
     {
         private readonly DiscordSocketClient _client;
         private readonly IServiceProvider _services;
+        private readonly CommandService _commands;
 
         public DiscordBot(IServiceProvider services)
         {
-            _client = new DiscordSocketClient();
-
             _services = services;
+            _client = _services.GetRequiredService<DiscordSocketClient>();
+            _commands = _services.GetRequiredService<CommandService>();
         }
 
         public async Task IntiateBot(string token)
@@ -26,11 +29,8 @@ namespace DiscordClient
                 await _client.LoginAsync(TokenType.Bot, token);
                 await _client.StartAsync();
 
-                // Start command handler 
-                await _services.GetRequiredService<CommandHandler>().InitializeAsync();
-
-                // Keep the program running until closed.
-                await Task.Delay(-1);
+                // Register modules - MUST BE PUBLIC AND INHERIT MODULE BASE
+                await _commands.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
             }
             catch (Exception ex)
             {
