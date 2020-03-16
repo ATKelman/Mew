@@ -27,7 +27,7 @@ namespace DiscordClient
                 await _client.StartAsync();
 
                 // Start command handler 
-                await _services.GetRequiredService<CommandHandler>().InitalizeAsync();
+                await _services.GetRequiredService<CommandHandler>().InitializeAsync();
 
                 // Keep the program running until closed.
                 await Task.Delay(-1);

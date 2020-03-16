@@ -22,7 +22,7 @@ namespace DiscordClient.Services
             _client.MessageReceived += MessageReceivedAsync;
         }
 
-        public async Task InitalizeAsync()
+        public async Task InitializeAsync()
         {
             // register modules - public & inherit ModuleBase
             _ = await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
