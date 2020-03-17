@@ -2,6 +2,7 @@
 using DataAccess.Modules;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace DiscordClient.Services
         public static async Task StartAsync(IServiceProvider service)
         {
             // Start Bot
-            await service.GetRequiredService<DiscordBot>().IntiateBot("");
+            await service.GetRequiredService<DiscordBot>().IntiateBot();
 
             // Load Services
             service.GetRequiredService<CommandHandlingService>();
