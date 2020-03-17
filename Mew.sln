@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebInterface", "WebInterface\WebInterface.csproj", "{16239B90-E0CB-42A4-8293-D33CC8180A7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebInterface", "WebInterface\WebInterface.csproj", "{16239B90-E0CB-42A4-8293-D33CC8180A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordClient", "DiscordClient\DiscordClient.csproj", "{4ECAAEAE-3C57-496C-B641-46B82D8D92C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordClient", "DiscordClient\DiscordClient.csproj", "{4ECAAEAE-3C57-496C-B641-46B82D8D92C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7010ED6A-B848-40A5-8DB7-99CE7D4FB2D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4ECAAEAE-3C57-496C-B641-46B82D8D92C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ECAAEAE-3C57-496C-B641-46B82D8D92C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ECAAEAE-3C57-496C-B641-46B82D8D92C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7010ED6A-B848-40A5-8DB7-99CE7D4FB2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7010ED6A-B848-40A5-8DB7-99CE7D4FB2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7010ED6A-B848-40A5-8DB7-99CE7D4FB2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7010ED6A-B848-40A5-8DB7-99CE7D4FB2D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
