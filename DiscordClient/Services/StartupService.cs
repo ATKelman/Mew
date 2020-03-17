@@ -1,4 +1,6 @@
-﻿using Discord.Commands;
+﻿using DataAccess;
+using DataAccess.Modules;
+using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +17,10 @@ namespace DiscordClient.Services
             services.AddSingleton<DiscordSocketClient>();
             services.AddSingleton<CommandHandlingService>();
             services.AddSingleton<CommandService>();
+
+            // Data Access 
+            services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
+            services.AddSingleton<IReminderData, ReminderData>();
         }
 
         public static async Task StartAsync(IServiceProvider service)
