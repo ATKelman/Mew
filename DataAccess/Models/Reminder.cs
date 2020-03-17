@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace DiscordClient.Models
+namespace DataAccess.Models
 {
     public class Reminder
     {

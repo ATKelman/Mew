@@ -1,5 +1,7 @@
-﻿using Discord.Commands;
-using DiscordClient.Models;
+﻿using DataAccess;
+using DataAccess.Models;
+using DataAccess.Modules;
+using Discord.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -9,12 +11,11 @@ namespace DiscordClient.Modules
 {
     public class ReminderCommands : ModuleBase
     {
-        // ToDo Add IDataAccess - New library for DataAccess, SQLConnection and Dapper? 
-        private IDataAccess _data;
+        private IReminderData _data;
 
         public ReminderCommands(IServiceProvider services)
         {
-            _data = services.GetRequiredService<IDataAccess>();
+            _data = services.GetRequiredService<IReminderData>();
         }
 
         [Command("RemindMe")]
@@ -80,17 +81,10 @@ namespace DiscordClient.Modules
 
                 var reminder = new Reminder(Context.User.Mention, Context.Channel.Id.ToString(), reminderTime, reminderMessage);
 
-                var isSuccess = await _data.Insert(reminder);
+                await _data.InsertReminder(reminder);
 
-                if (isSuccess)
-                {
-                    var emote = new Discord.Emoji("thumbsup");
-                    await Context.Message.AddReactionAsync(emote);
-                }
-                else
-                {
-                    await ReplyAsync("Unable to Set Reminder.");
-                }
+                var emote = new Discord.Emoji("thumbsup");
+                await Context.Message.AddReactionAsync(emote);
             }
             catch (Exception ex)
             {
