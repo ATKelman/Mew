@@ -78,13 +78,7 @@ namespace DiscordClient.Modules
                     }
                 }
 
-                var reminder = new Reminder()
-                {
-                    Username = Context.User.Mention,
-                    Channel = Context.Channel.Id.ToString(),
-                    ReminderTime = reminderTime,
-                    Message = reminderMessage
-                };
+                var reminder = new Reminder(Context.User.Mention, Context.Channel.Id.ToString(), reminderTime, reminderMessage);
 
                 var isSuccess = await _data.Insert(reminder);
 
