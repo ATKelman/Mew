@@ -1,8 +1,5 @@
 using System.Threading.Tasks;
-using DiscordClient;
-using DiscordClient.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace WebInterface
@@ -13,11 +10,8 @@ namespace WebInterface
         {
             var host = CreateHostBuilder(args).Build();
 
-            // Start Bot
-            await host.Services.GetRequiredService<DiscordBot>().IntiateBot("");
-
-            // Load Services
-            host.Services.GetRequiredService<CommandHandlingService>();
+            // Start dlls
+            await DiscordClient.Services.StartupService.StartAsync(host.Services);
 
             await host.RunAsync();
         }

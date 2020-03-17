@@ -1,7 +1,3 @@
-using Discord.Commands;
-using Discord.WebSocket;
-using DiscordClient;
-using DiscordClient.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +23,9 @@ namespace WebInterface
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<DiscordBot>();
-            services.AddSingleton<DiscordSocketClient>();
-            services.AddSingleton<CommandHandlingService>();
-            services.AddSingleton<CommandService>();
+
+            // Allow DiscordClient to add its own services
+            DiscordClient.Services.StartupService.ConfigureService(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
