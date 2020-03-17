@@ -9,7 +9,7 @@ namespace DiscordClient.Modules
 {
     public class ReminderCommands : ModuleBase
     {
-        // ToDo Add IDataAccess 
+        // ToDo Add IDataAccess - New library for DataAccess, SQLConnection and Dapper? 
         private IDataAccess _data;
 
         public ReminderCommands(IServiceProvider services)
