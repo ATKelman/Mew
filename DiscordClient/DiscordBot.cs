@@ -33,11 +33,6 @@ namespace DiscordClient
                 await _client.LoginAsync(TokenType.Bot, _config["Token"]);
                 await _client.StartAsync();
 
-                if (_client.ConnectionState != ConnectionState.Connected)
-                {
-                    throw new Exception("Failed to connect.");
-                }
-
                 _client.Disconnected += OnClientDisconnected;
 
                 // Register modules - MUST BE PUBLIC AND INHERIT MODULE BASE
