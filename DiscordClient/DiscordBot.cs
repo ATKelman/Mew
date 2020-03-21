@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using DiscordClient.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
 using System.Threading;
@@ -17,6 +18,7 @@ namespace DiscordClient
         private readonly IServiceProvider _services;
         private readonly CommandService _commands;
         private readonly IConfiguration _config;
+        private readonly ILogger _logger;
 
         public DiscordBot(IServiceProvider services)
         {
@@ -24,6 +26,7 @@ namespace DiscordClient
             _client = _services.GetRequiredService<DiscordSocketClient>();
             _commands = _services.GetRequiredService<CommandService>();
             _config = _services.GetRequiredService<IConfiguration>();
+            _logger = services.GetRequiredService<ILogger<DiscordBot>>();
         }
 
         public async Task IntiateBot()
@@ -35,6 +38,7 @@ namespace DiscordClient
 
                 _client.LoggedOut += OnClientLoggedOut;
                 _client.Disconnected += OnClientDisconnected;
+
 
                 // Register modules - MUST BE PUBLIC AND INHERIT MODULE BASE
                 await _commands.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
@@ -59,13 +63,13 @@ namespace DiscordClient
         {
             try
             {
-                // Log Attempting to reconnect
+                _logger.LogInformation($"Attemping to Reconnect...");
 
                 await IntiateBot();
             }
             catch (Exception ex)
             {
-                // ToDo log exception 
+                _logger.LogError(ex, $"Reconnection attempt failed - [{ex.Message}]");
 
                 Thread.Sleep(2000);
 

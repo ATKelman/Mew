@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
+using Serilog;
 using WebInterface.Data;
 
 namespace WebInterface
@@ -30,6 +32,10 @@ namespace WebInterface
             services.AddSingleton<WeatherForecastService>();
 
             services.AddSingleton(Configuration);
+            services.AddLogging(x => x.AddSerilog());
+
+            // Configure logging level
+            services.Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
 
             // Allow DiscordClient to add its own services
             DiscordClient.Services.StartupService.ConfigureService(services);

@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace WebInterface
 {
@@ -8,12 +10,24 @@ namespace WebInterface
     {
         public static async Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            // Initiate Logger
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("logs/Mew.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
 
-            // Start dlls
-            await DiscordClient.Services.StartupService.StartAsync(host.Services);
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
 
-            await host.RunAsync();
+                // Start dlls
+                await DiscordClient.Services.StartupService.StartAsync(host.Services);
+
+                await host.RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, $"Failed to Initiate - [{ex.Message}]");
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
