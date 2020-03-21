@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DiscordClient
@@ -32,12 +33,42 @@ namespace DiscordClient
                 await _client.LoginAsync(TokenType.Bot, _config["Token"]);
                 await _client.StartAsync();
 
+                if (_client.ConnectionState != ConnectionState.Connected)
+                {
+                    throw new Exception("Failed to connect.");
+                }
+
+                _client.Disconnected += OnClientDisconnected;
+
                 // Register modules - MUST BE PUBLIC AND INHERIT MODULE BASE
                 await _commands.AddModulesAsync(Assembly.GetExecutingAssembly(), _services);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Failed to initiate bot: {ex.Message}", ex.InnerException);
+            }
+        }
+
+        private async Task OnClientDisconnected(Exception arg)
+        {
+            await TryToReconnect();
+        }
+
+        private async Task TryToReconnect()
+        {
+            try
+            {
+                // Log Attempting to reconnect
+
+                await IntiateBot();
+            }
+            catch (Exception ex)
+            {
+                // ToDo log exception 
+
+                Thread.Sleep(2000);
+
+                await TryToReconnect();
             }
         }
     }
