@@ -33,6 +33,7 @@ namespace DiscordClient
                 await _client.LoginAsync(TokenType.Bot, _config["Token"]);
                 await _client.StartAsync();
 
+                _client.LoggedOut += OnClientLoggedOut;
                 _client.Disconnected += OnClientDisconnected;
 
                 // Register modules - MUST BE PUBLIC AND INHERIT MODULE BASE
@@ -42,6 +43,11 @@ namespace DiscordClient
             {
                 throw new Exception($"Failed to initiate bot: {ex.Message}", ex.InnerException);
             }
+        }
+
+        private async Task OnClientLoggedOut()
+        {
+            await TryToReconnect();
         }
 
         private async Task OnClientDisconnected(Exception arg)
