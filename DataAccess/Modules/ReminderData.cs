@@ -31,8 +31,8 @@ namespace DataAccess.Modules
 
         public Task InsertReminder(Reminder reminder)
         {
-            string sql = @"Insert into dbo.Reminder (Username, Channel, ReminderTime, Message)
-                            values (@Username, @Channel, @ReminderTime, @Message)";
+            string sql = @"Insert into dbo.Reminder (Username, Channel, ReminderTime, Message, Status)
+                            values (@Username, @Channel, @ReminderTime, @Message, 10)";
             return _db.SaveData(sql, reminder);
         }
     }
