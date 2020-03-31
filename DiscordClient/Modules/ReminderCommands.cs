@@ -79,12 +79,14 @@ namespace DiscordClient.Modules
                     }
                 }
 
-                var reminder = new Reminder(Context.User.Mention, Context.Channel.Id.ToString(), reminderTime, reminderMessage);
+                var reminder = new Reminder(Context.User.Mention, Context.Channel.Id.ToString(), reminderTime, reminderMessage, 10);
 
                 await _data.InsertReminder(reminder);
 
-                var emote = new Discord.Emoji("thumbsup");
-                await Context.Message.AddReactionAsync(emote);
+                //var emote = new Discord.Emoji("thumbsup");
+                //await Context.Message.AddReactionAsync(emote);
+
+                await ReplyAsync("Reminder Set!");
             }
             catch (Exception ex)
             {

@@ -61,9 +61,9 @@ namespace DiscordClient.Services
             {
                 var rand = random.Next(0, channels.Count);
                 channel = channels.ElementAt(rand);
-                if (channel.Name.Equals("NIPPON") || channel.Name.Equals("nippon-lesson") || channel.Name.Equals("Nippon Voice") 
-                    || channel.Name.Equals("General") || channel.Name.Equals("Gaming 1") || channel.Name.Equals("Gaming 2") || channel.Name.Equals("nsfw-thestoryofbotkun") 
-                    || channel.Name.Equals("test1") || channel.Name.Equals("VOICE CHANNELS"))
+                if (channel.Name.ToUpper().Equals("NIPPON") || channel.Name.ToUpper().Equals("NIPPON-LESSON") || channel.Name.ToUpper().Equals("NIPPON VOICE") 
+                    || channel.Name.ToUpper().Equals("GENERAL") || channel.Name.ToUpper().Equals("GAMING 1") || channel.Name.ToUpper().Equals("GAMING 2") || channel.Name.ToUpper().Equals("NSFW-THESTORYOFBOTKUN") 
+                    || channel.Name.ToUpper().Equals("TEST1") || channel.Name.ToUpper().Equals("VOICE CHANNELS"))
                 {
                     continue;
                 }
